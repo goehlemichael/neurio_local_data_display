@@ -12,11 +12,15 @@
     ./neurio.sh
 
 ### if using a window manager like screen
+
     screen bash
     ./neurio.sh
+
 ### ctrl-a then ctrl-d to detach window
 
 [neurio api docs](https://api-docs.neur.io/#sensor-local-access)
 
 ### if using nix you can set things up with the nix shell which will override the terminal type for testing
+
     nix-shell neurio.nix
+    ./neurio.sh
