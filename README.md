@@ -1,26 +1,33 @@
-### real time chart your power home consumption
+### real time chart your power home energy consumption
+### tested with original neurio energy monitors
+### requires access to same network neurio is running
 
 ### requires curl, jq, gnuplot
 
-### recommend running in a window manager like screen
+    chmod +x neurio_no_pw_endpoint.sh
+    ./neurio_no_pw_endpoint.sh
 
-### may need to specify bash shebang and env values in script
+##  endpoint protected with password
 
-### make executable
-
-    chmod +x neurio.sh
-    ./neurio.sh
-
-### if using a window manager like screen
-
-    screen bash
-    ./neurio.sh
-
-### ctrl-a then ctrl-d to detach window
+    chmod +x neurio_with_pw_endpoint.sh
+    ./neurio_with_pw_endpoint.sh
 
 [neurio api docs](https://api-docs.neur.io/#sensor-local-access)
 
-### if using nix you can set things up with the nix shell which will override the terminal type for testing
+### using nix shell (note: overrides the terminal type)
+### protected endpoint
 
-    nix-shell neurio.nix
-    ./neurio.sh
+    cd nix_dev_shell
+    nix-shell neurio_protected.nix
+
+### unprotected endpoint
+
+    cd nix_dev_shell
+    nix-shell neurio_unprotected.nix
+
+### Can use gnuplot environment variables 
+## The default terminal type setup is x11, you can override with this env variable
+
+    TERM_NAME=''
+
+[gnuplot terminal types](http://www.gnuplot.info/docs_4.2/node341.html)

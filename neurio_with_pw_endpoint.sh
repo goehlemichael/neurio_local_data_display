@@ -34,19 +34,22 @@ check_command gnuplot
 
 write_config $TEMP_GNUPLOT_CONFIG_FILE \
     "set terminal ${OUTPUT_TERMINAL_TYPE}" \
+    "set datafile missing \"?\"" \
     "set xdata time" \
     "set timefmt \"%Y-%m-%d %H:%M:%S\"" \
     "set format x \"%H:%M:%S\"" \
-    "set ytics font \"Times-Roman,34\"" \
+    "set ytics font \"Times-Roman,36\"" \
     "set xrange [time(0)-120:time(0)]" \
     "set yrange [:]" \
     "set lmargin at screen 0.1" \
     "set rmargin at screen 0.9" \
     "set bmargin at screen 0.1" \
     "set tmargin at screen 0.9" \
-    "plot \""$TEMP_DATA_FILE"\" using 1:3 with lines" \
-    "pause 2" \
-    "reread"
+    "while (1) {" \
+    "    plot \""$TEMP_DATA_FILE"\" using 1:3 with lines" \
+    "    pause 2" \
+    "    refresh" \
+    "}"
 
 echo "$DISPLAY"
 timestamp=$(date +"%Y-%m-%d %H:%M:%S")
@@ -61,6 +64,7 @@ fetch_and_process_data() {
         echo "$timestamp $data" >> "$TEMP_DATA_FILE"
         sleep 2
     else
+        echo "$timestamp ?" >> "$TEMP_DATA_FILE"
         logger "something went wrong with neurio datapoint $timestamp"
     fi
 }
