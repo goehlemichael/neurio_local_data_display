@@ -45,11 +45,9 @@ write_config $TEMP_GNUPLOT_CONFIG_FILE \
     "set rmargin at screen 0.9" \
     "set bmargin at screen 0.1" \
     "set tmargin at screen 0.9" \
-    "while (1) {" \
-    "    plot \""$TEMP_DATA_FILE"\" using 1:3 with lines" \
-    "    pause 2" \
-    "    refresh" \
-    "}"
+    "plot \""$TEMP_DATA_FILE"\" using 1:3 with lines" \
+    "pause 2" \
+    "reread"
 
 echo "$DISPLAY"
 timestamp=$(date +"%Y-%m-%d %H:%M:%S")
