@@ -10,7 +10,7 @@ echo "temp data file location $TEMP_DATA_FILE"
 echo "temp gnu plot config location $TEMP_GNUPLOT_CONFIG_FILE"
 
 check_command() {
-    if command -v $1 >/dev/null 2>&1; then
+    if command -v "$1" >/dev/null 2>&1; then
         echo "$1 is installed"
     else
         echo "$1 is not installed"
@@ -21,7 +21,7 @@ write_config() {
     local file=$1
     shift
     while (( "$#" )); do
-        echo "$1" >> $file
+        echo "$1" >> "$file"
         shift
     done
 }
@@ -32,7 +32,7 @@ check_command gnuplot
 
 : ${DISPLAY:=:0}
 
-write_config $TEMP_GNUPLOT_CONFIG_FILE \
+write_config "$TEMP_GNUPLOT_CONFIG_FILE" \
     "set terminal ${OUTPUT_TERMINAL_TYPE}" \
     "set datafile missing \"?\"" \
     "set xdata time" \
@@ -64,6 +64,7 @@ fetch_and_process_data() {
     else
         echo "$timestamp ?" >> "$TEMP_DATA_FILE"
         logger "something went wrong with neurio datapoint $timestamp"
+        sleep 2
     fi
 }
 
